@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { FaTrash, FaEdit } from "react-icons/fa";
-
+import axios from "axios";
+import { toast } from "react-toastify";
 
 
 const Table = styled.table`
@@ -28,8 +29,17 @@ export const Th = styled.th`
   text-align: center;
 `;
 
-const Grid = ({ users }) => {
+const Grid = ({ users , onDeleteUser, onEditUser }) => {
   
+  const handleDeleteUser = async (userId) => {
+    try {
+      await axios.delete(`http://localhost:3001/users/${userId}`);
+      onDeleteUser(userId);
+    } catch (error) {
+      toast.error(error);
+    }
+  };
+
   return (
     <Table>
       <Thead>
@@ -42,16 +52,16 @@ const Grid = ({ users }) => {
         </Tr>
       </Thead>
       <Tbody>
-        {users.map((item, i) => (
+        {users.map((user, i) => (
           <Tr key={i}>
-            <Td width="30%">{item.name}</Td>
-            <Td width="30%">{item.email}</Td>
-            <Td width="30%">{item.cpf}</Td>
+            <Td width="30%">{user.name}</Td>
+            <Td width="30%">{user.email}</Td>
+            <Td width="30%">{user.cpf}</Td>
             <Td width="5%">
-              <FaEdit/>
+              <FaEdit onClick={() => onEditUser(user)}/>
             </Td>
             <Td width="5%">
-              <FaTrash />
+              <FaTrash onClick={() => handleDeleteUser(user.id)} />
             </Td>
           </Tr>
         ))}

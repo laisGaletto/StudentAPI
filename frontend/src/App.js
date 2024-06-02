@@ -22,6 +22,7 @@ const Title = styled.h2` `;
 
 function App() {
   const [users, setUsers] = useState([]);
+  const [editingUser, setEditingUser] = useState(null)
 
   const getUsers = async () => {
     try {
@@ -30,19 +31,39 @@ function App() {
     } catch (error) {
       toast.error(error)
     }
-  }
+  };
 
   useEffect(() => {
     getUsers();
     // com array vazio useEffect executa apenas uma vez 
-    }, [])
+  }, []);
 
+  const handleAddUser = (newUser) => {
+    // setUsers((prevUsers) => [...prevUsers, newUser]);
+    getUsers()
+  };
+
+  const handleDeleteUser = (deletedUserId) => {
+    setUsers(users.filter((user) => user.id !== deletedUserId));
+  };
+
+  const handleEditUser = (user) => {
+    setEditingUser(user);
+  };
+
+  const handleUpdateUser = (updatedUser) => {
+    setUsers((prevUsers) =>
+      prevUsers.map((user) => (user.id === updatedUser.id ? updatedUser : user))
+    );
+    setEditingUser(null);
+  };
+  
   return (
     <>
       <Container>
         <Title>ALUNOS</Title>
-        <Form />
-        <Grid users={users}/>
+        <Form onAddUser={handleAddUser} onUpdateUser={handleUpdateUser} editingUser={editingUser}/>
+        <Grid users={users}  onDeleteUser={handleDeleteUser} onEditUser={handleEditUser}/>
       </Container>
       <GlobalStyle/>
     </>
