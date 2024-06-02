@@ -10,6 +10,46 @@ export const getUsersController = (_, res) => {
   })
 }
 
+export const searchUserController = (req, res) => {
+  const { name, email, cpf } = req.query;
+
+  let q = "SELECT * FROM users";
+
+  const values = [];
+  const conditions = [];
+
+  if (name) {
+    conditions.push('name LIKE ?');
+    values.push(`%${name}%`);
+  }
+  if (email) {
+    conditions.push('email LIKE ?');
+    values.push(`%${email}%`);
+  }
+  if (cpf) {
+    conditions.push('cpf LIKE ?');
+    values.push(`%${cpf}%`);
+  }
+
+  if (conditions.length > 0) {
+    q += ' WHERE ' + conditions.join(' AND ');
+  }
+
+  db.query(q, values, (err, result) => {
+    if (err) {
+      console.error('Erro ao buscar usuário:', err.message);
+      return res.status(500).json({ error: 'Erro interno do servidor' });
+    }
+
+    // Se não houver condiçoes ou nenhum resultado, retornar todos users
+    if (conditions.length === 0 || result.length === 0) {
+      getUsersController(req, res)
+    } else {
+      res.json(result);
+    }
+  });
+};
+
 export const addUsersController = (req, res) => {
 
   const q = "INSERT INTO users (`name`, `email`, `cpf`) VALUES(?,?,?)"
@@ -20,14 +60,14 @@ export const addUsersController = (req, res) => {
     req.body.cpf,
   ]
 
-  db.query(q, values, (err) => { 
+  db.query(q, values, (err) => {
     if (err) return res.json(err);
 
     //adicionado status 201 após inserção do user
     return res.status(201).json("Usuário cadastrado com sucesso")
     
   })
-}
+};
 
 export const deleteUserController = (req, res) => {
   const userId = req.params.id;
