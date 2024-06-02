@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { config } from "../config";
 import { FaTrash, FaEdit } from "react-icons/fa";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -23,7 +24,8 @@ export const Tbody = styled.tbody``;
 export const Tr = styled.tr``;
 
 export const Td = styled.td`
-text-align: center;`;
+text-align: center;
+`;
 
 export const Th = styled.th`
   text-align: center;
@@ -33,7 +35,7 @@ const Grid = ({ users , onDeleteUser, onEditUser }) => {
   
   const handleDeleteUser = async (userId) => {
     try {
-      await axios.delete(`http://localhost:3001/users/${userId}`);
+      await axios.delete(config.API_HOST + `/users/${userId}`);
       onDeleteUser(userId);
     } catch (error) {
       toast.error(error);

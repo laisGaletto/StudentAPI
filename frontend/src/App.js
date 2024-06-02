@@ -2,6 +2,8 @@ import GlobalStyle from "./styles/global";
 import styled from "styled-components";
 import { Form } from "./components/Form";
 import Grid from "./components/Grid";
+import FormSearch from "./components/FormSearch";
+import { config } from "./config";
 import { useState , useEffect } from "react";
 import axios from "axios";
 import {toast} from "react-toastify"
@@ -26,7 +28,7 @@ function App() {
 
   const getUsers = async () => {
     try {
-      const res = await axios.get("http://localhost:3001/users");
+      const res = await axios.get(config.API_HOST + "/users");
       setUsers(res.data.sort((a, b) => (a.name > b.name ? 1 : -1)));
     } catch (error) {
       toast.error(error)
@@ -41,6 +43,10 @@ function App() {
   const handleAddUser = (newUser) => {
     // setUsers((prevUsers) => [...prevUsers, newUser]);
     getUsers()
+  };
+
+  const handleSearch = (searchResults) => {
+    setUsers(searchResults);
   };
 
   const handleDeleteUser = (deletedUserId) => {
@@ -62,6 +68,7 @@ function App() {
     <>
       <Container>
         <Title>ALUNOS</Title>
+        <FormSearch onSearch={handleSearch} />
         <Form onAddUser={handleAddUser} onUpdateUser={handleUpdateUser} editingUser={editingUser}/>
         <Grid users={users}  onDeleteUser={handleDeleteUser} onEditUser={handleEditUser}/>
       </Container>
