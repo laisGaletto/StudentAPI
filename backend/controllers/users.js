@@ -1,54 +1,24 @@
 import { db } from "../db.js";
 
-export const getUsersController = (_, res) => {
-  const q = "SELECT * FROM users";
+export const getUsersController = (req, res) => {
+  let q = "SELECT * FROM users";
 
-  db.query(q, (err, data) => {
+  const { query } = req.query;
+  const values = []
+
+  if (query) {
+    q += " WHERE name LIKE ? OR email LIKE ? OR cpf LIKE ?"
+    values.push(`%${query}%`)
+    values.push(`%${query}%`)
+    values.push(`%${query}%`)
+  }
+
+  db.query(q, values, (err, data) => {
     if (err) return res.json(err);
     
     return res.status(200).json(data)
   })
 }
-
-export const searchUserController = (req, res) => {
-  const { name, email, cpf } = req.query;
-
-  let q = "SELECT * FROM users";
-
-  const values = [];
-  const conditions = [];
-
-  if (name) {
-    conditions.push('name LIKE ?');
-    values.push(`%${name}%`);
-  }
-  if (email) {
-    conditions.push('email LIKE ?');
-    values.push(`%${email}%`);
-  }
-  if (cpf) {
-    conditions.push('cpf LIKE ?');
-    values.push(`%${cpf}%`);
-  }
-
-  if (conditions.length > 0) {
-    q += ' WHERE ' + conditions.join(' AND ');
-  }
-
-  db.query(q, values, (err, result) => {
-    if (err) {
-      console.error('Erro ao buscar usuário:', err.message);
-      return res.status(500).json({ error: 'Erro interno do servidor' });
-    }
-
-    // Se não houver condiçoes ou nenhum resultado, retornar todos users
-    if (conditions.length === 0 || result.length === 0) {
-      getUsersController(req, res)
-    } else {
-      res.json(result);
-    }
-  });
-};
 
 export const addUsersController = (req, res) => {
 
