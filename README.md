@@ -1,5 +1,8 @@
 # StudentAPI
 
+O projeto consiste em desenvolver uma API utilizando Node.js que consome um banco de dados de alunos e uma interface de usuário (UI) em React para realizar consultas e operações CRUD (Create, Read, Update, Delete) no banco de dados. 
+O banco de dados conterá as informações de alunos como: id, name, email e cpf.
+
 ## Funcionalidades
 
 - Criar um novo usuário
@@ -69,3 +72,6 @@ CREATE TABLE users (
 Create app user:
 ALTER USER 'admin_app'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
 ```
+
+Para visualizar o fluxo completo [acesse aqui!](https://excalidraw.com/#json=QukxicH6-FU7JmIvBH3RR,LsLM4DNvVgmdWD0XMzslfg)
+![Fluxograma](fluxograma.png)
