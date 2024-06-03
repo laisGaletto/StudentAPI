@@ -37,9 +37,9 @@ O banco de dados conterá as informações de alunos como: id, name, email e cpf
 
 1. Clone este repositório: `git clone https://github.com/laisGaletto/studentAPI.git`
 2. Acesse o diretório do projeto: `cd studentAPI`
-3. Instale as dependências do backend: `cd backend && npm install`
-4. Instale as dependências do frontend: `cd ../frontend && npm install`
-5. 5. Inicie o frontend:`npm start`
+3. Instale as dependências do backend: `cd backend`e `npm install`
+4. Instale as dependências do frontend: `cd ../frontend`e `npm install`
+5. Inicie o frontend:`npm start`
 6. Em uma nova janela ou aba do terminal, acesse a pasta do backend e inicie-o: `cd ../backend` e `npm start`
 
 
@@ -77,7 +77,7 @@ GRANT ALL PRIVILEGES ON app_challenge.* TO 'admin_app'@'localhost';
 FLUSH PRIVILEGES;
 ```
 
-Para visualizar o fluxo completo [acesse aqui!](https://excalidraw.com/#json=QukxicH6-FU7JmIvBH3RR,LsLM4DNvVgmdWD0XMzslfg)
+Para visualizar o fluxo completo [acesse aqui!](https://excalidraw.com/#json=Az6VFYrrH4cSLa1y3wyHM,Efc-49yBYVLDkAEi8yPq6Q)
 ![Fluxograma](fluxograma.png)
 
 ## ROADMAP 
