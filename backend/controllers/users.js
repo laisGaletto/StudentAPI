@@ -1,84 +1,55 @@
 import { db } from "../db.js";
+import { addUsersService, deleteUserService, getUsersService, updatedUserService } from "../services/users.js";
 
-export const getUsersController = (req, res) => {
-  let q = "SELECT * FROM users";
-
+export const getUsersController = async (req, res) => {
   const { query } = req.query;
-  const values = []
-
-  if (query) {
-    q += " WHERE name LIKE ? OR email LIKE ? OR cpf LIKE ?"
-    values.push(`%${query}%`)
-    values.push(`%${query}%`)
-    values.push(`%${query}%`)
+  try {
+    const users = await getUsersService(query);
+    console.log(users)
+    return res.status(200).json(users);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      message: "Erro ao buscar usuários",
+    })
   }
-
-  db.query(q, values, (err, data) => {
-    if (err) return res.json(err);
-    
-    return res.status(200).json(data)
-  })
-}
-
-export const addUsersController = (req, res) => {
-
-  const q = "INSERT INTO users (`name`, `email`, `cpf`) VALUES(?,?,?)"
-
-  const values = [
-    req.body.name,
-    req.body.email,
-    req.body.cpf,
-  ]
-
-  db.query(q, values, (err) => {
-    if (err) return res.json(err);
-
-    //adicionado status 201 após inserção do user
-    return res.status(201).json("Usuário cadastrado com sucesso")
-    
-  })
 };
 
-export const deleteUserController = (req, res) => {
-  const userId = req.params.id;
-
-  const q = "DELETE FROM users WHERE id=?";
-
-  db.query(q, [userId], (err, result) => {
-    if (err) {
-      console.error("Erro ao excluir usuário:", err.message);
-      return res.status(500).json({ error: "Erro interno do servidor" });
-    }
-
-    return res.status(200).json({ message: "Usuário deletado com sucesso" });
-  });
+export const addUsersController = async (req, res) => {
+  try {
+    const newUsers = await addUsersService(req.body.name, req.body.email, req.body.cpf);
+    console.log(newUsers)
+    return res.status(201).json(newUsers);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      message: "Erro ao adicionar novo usuário",
+    })
+ }
 };
 
-export const updateUserController = (req, res) => {
-  const userId = req.params.id;
-  const { name, email, cpf } = req.body;
-
-  if (!userId || !name || !email || !cpf) {
-    console.log("Campos obrigatórios faltando:", { userId, name, email, cpf });
-    return res.status(400).json({ error: "Todos os campos são obrigatórios" });
+export const deleteUserController = async (req, res) => {
+  try {
+    const deleteUser = await deleteUserService(req.params.id);
+    console.log(deleteUser)
+    return res.status(200).json({message: "Usuário deletado com sucesso" })
+  } catch (error){
+    console.error(error);
+    return res.status(500).json({
+      message: "Erro ao excluir novo usuário",
+    })
   }
+};
 
-  console.log("Atualizando usuário:", { userId, name, email, cpf });
-
-  const q = "UPDATE users SET name=?, email=?, cpf=? WHERE id=?";
-
-  db.query(q, [name, email, cpf, userId], (err, result) => {
-    if (err) {
-      console.error("Erro ao atualizar usuário:", err.mesage);
-      return res.status(500).json({ error: "Erro interno no servidor" });
-    }
-
-    if (result.affectedRows === 0) {
-      console.error("Nenhum usuário encontrado com o ID especificado");
-      return res.status(404).json({ error: "Usuário não encontrado" });
-    }
-
-    console.log("Usuário atualizado com sucesso:", result);
+export const updateUserController = async (req, res) => {
+  try {
+    const updateUser = await updatedUserService(req.params.id, req.body.name, req.body.email, req.body.cpf)
+    console.log(updateUser)
     return res.status(200).json({ message: "Usuário atualizado com sucesso" })
-  });
-};
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      message: "Erro ao atualizar usuário",
+    })
+  }
+}
