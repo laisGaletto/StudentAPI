@@ -9,6 +9,7 @@ const FormContainer = styled.form`
   max-width: 800px;
   align-items: flex-end;
   gap: 15px;
+  flex-direction: row;
   background-color: #17af75d4;
   padding: 20px;
   justify-content: center;
@@ -16,6 +17,11 @@ const FormContainer = styled.form`
   border-radius: 5px;
   margin: 20px auto; 
   width: 100%; 
+
+  @media (max-width: 600px) {
+    max-width: 250px;
+    flex-direction: column;
+  }
 `;
 
 const InputArea = styled.div`
@@ -30,6 +36,9 @@ const Input = styled.input`
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
   border-radius: 5px;
   height:40px;
+  @media (max-width: 600px) {
+    padding: 0 60px;
+  }
 `;
 
 const Button = styled.button`
@@ -41,6 +50,9 @@ const Button = styled.button`
   background-color: #000;
   color: white;
   height: 40px;
+  @media (max-width: 600px) {
+    padding: 0 60px;
+  }
 `;
 
 const Label = styled.label` `;

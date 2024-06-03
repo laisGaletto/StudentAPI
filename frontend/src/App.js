@@ -29,9 +29,21 @@ const Container2 = styled.div`
   margin: 20px auto;
   padding: 20px;
   align-items: flex-end;
+
+  @media (max-width: 600px) {
+    justify-content: center;
+    flex-direction: column;
+    margin: auto 20px ;
+  }
 `;
 
-const Title = styled.h2` `;
+const Title = styled.h2` 
+@media (max-width: 600px) {
+  justify-content: center;
+  flex-direction: column;
+  margin: auto;
+}
+`;
 
 function App() {
   const [users, setUsers] = useState([]);

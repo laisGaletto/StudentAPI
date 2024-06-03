@@ -12,6 +12,10 @@ const Global = createGlobalStyle`
     width: 100vw;
     height: 100vh;
     background-color: #f2f2f2;
+
+    @media (max-width: 600px) {
+      display: flex;
+    }
   }
 `;
 

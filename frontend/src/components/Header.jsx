@@ -9,6 +9,9 @@ const HeaderContainer = styled.div`
   align-items:center;
   justify-content: center;
   background-color:#00e88f4d;
+  @media (max-width: 600px) {
+    font-size: 12px
+  }
 `;
 
 const Title = styled.h1``
