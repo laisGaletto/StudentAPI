@@ -53,10 +53,13 @@ export const deleteUserService = (id) => {
   })
 }
 
-export const updatedUserService = (id, name, cpf, email) => {
+export const updatedUserService = (id, name, email, cpf) => {
   return new Promise((resolve, reject) => {
+
     const q = "UPDATE users SET name=?, email=?, cpf=? WHERE id=?";
     const values = [name, email, cpf, id];
+     
+    console.log(values)
 
     db.query(q, values, (err, data) => {
 

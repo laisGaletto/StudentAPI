@@ -10,7 +10,7 @@ export const getUsersController = async (req, res) => {
   } catch (error) {
     console.error(error);
     return res.status(500).json({
-      message: "Erro ao buscar usuários",
+      message: "Error ao buscar usuários",
     })
   }
 };
@@ -43,7 +43,7 @@ export const deleteUserController = async (req, res) => {
 
 export const updateUserController = async (req, res) => {
   try {
-    const updateUser = await updatedUserService(req.params.id, req.body.name, req.body.email, req.body.cpf)
+    const updateUser = await updatedUserService(req.params.id , req.body.name, req.body.email, req.body.cpf)
     console.log(updateUser)
     return res.status(200).json({ message: "Usuário atualizado com sucesso" })
   } catch (error) {
