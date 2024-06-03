@@ -7,17 +7,28 @@ import { config } from "./config";
 import { useState , useEffect } from "react";
 import axios from "axios";
 import {toast} from "react-toastify"
+import Header from "./components/Header";
 
 
 
 const Container = styled.div`
-  width: 100%;
-  max-width: 800px;
-  margin-top: 20px;
+  width: 100vw;
+  margin: 20px auto;
   display: flex;
+  max-width: 850px;
   flex-direction: column;
-  align-items: center;
+  justify-content: center;
   gap: 10px;
+`;
+
+const Container2 = styled.div`
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  max-width: 850px;
+  margin: 20px auto;
+  padding: 20px;
+  align-items: flex-end;
 `;
 
 const Title = styled.h2` `;
@@ -66,9 +77,12 @@ function App() {
   
   return (
     <>
-      <Container>
-        <Title>ALUNOS</Title>
+      <Header />
+      <Container2>
+      <Title>Gerenciamento de alunos</Title> 
         <FormSearch onSearch={handleSearch} />
+      </Container2>
+      <Container>
         <Form onAddUser={handleAddUser} onUpdateUser={handleUpdateUser} editingUser={editingUser}/>
         <Grid users={users}  onDeleteUser={handleDeleteUser} onEditUser={handleEditUser}/>
       </Container>

@@ -9,27 +9,42 @@ import { toast } from "react-toastify";
 const Table = styled.table`
   width: 100%;
   background: #fff;
-  padding: 20px;
+  padding: 30px; /* Aumentando o padding */
   box-shadow: 0px 0px 5px #ccc;
-  border-radius: 5px;
-  max-width: 800px;
+  border-radius: 20px;
+  max-width: 900px;
   margin: 20px auto;
   word-break: break-all;
+  border-collapse: collapse; /* Adicionando colapso de borda para evitar espaços entre células */
+  border-top-left-radius: 20px; /* Arredondando a borda superior esquerda */
+  border-top-right-radius: 20px; /* Arredondando a borda superior direita */
 `;
 
-export const Thead = styled.thead``;
+export const Thead = styled.thead`
+  background-color: #17af75d4;
+  color: #000;
+  border-radius: 20px;
+`;
 
-export const Tbody = styled.tbody``;
+export const Tbody = styled.tbody`
+  border-radius: 20px;
+`;
 
-export const Tr = styled.tr``;
+export const Tr = styled.tr`
+&:nth-child(even) {
+  background-color: #f2f2f2; 
+}`;
 
 export const Td = styled.td`
-text-align: center;
+  text-align: center;
+  padding: 20px; /* Aumentando o padding */
 `;
 
 export const Th = styled.th`
   text-align: center;
+  padding: 20px; /* Aumentando o padding */
 `;
+
 
 const Grid = ({ users , onDeleteUser, onEditUser }) => {
   

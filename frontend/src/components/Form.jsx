@@ -6,13 +6,16 @@ import { toast } from "react-toastify";
 
 const FormContainer = styled.form`
   display: flex;
+  max-width: 800px;
   align-items: flex-end;
-  gap: 10px;
-  flex-wrap: wrap;
-  backgorund-color: #fff;
+  gap: 15px;
+  background-color: #17af75d4;
   padding: 20px;
+  justify-content: center;
   box-shadow: 0px 0px 5px #ccc;
   border-radius: 5px;
+  margin: 20px auto; 
+  width: 100%; 
 `;
 
 const InputArea = styled.div`
@@ -23,19 +26,21 @@ const InputArea = styled.div`
 const Input = styled.input`
   width: 120px;
   padding: 0 10px;
-  border: 1px solid #bbb;
+  border: none;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
   border-radius: 5px;
   height:40px;
 `;
 
 const Button = styled.button`
-  passing: 10px;
+  padding: 0 20px;
   cursor: pointer;
   border-radius: 5px;
   border: none;
-  backgorund-color: #000;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  background-color: #000;
   color: white;
-  height: 42px;
+  height: 40px;
 `;
 
 const Label = styled.label` `;
@@ -84,15 +89,15 @@ export const Form = ({ onAddUser , onUpdateUser , editingUser }) => {
   return (
     <FormContainer ref={formRef} onSubmit={handleSubmit} >
       <InputArea>
-        <Label>Nome</Label>
+        <Label>Nome:</Label>
         <Input name="name"/>
       </InputArea>
       <InputArea>
-        <Label>E-mail</Label>
+        <Label>E-mail:</Label>
         <Input name="email" />
       </InputArea>
       <InputArea>
-        <Label>CPF</Label>
+        <Label>CPF:</Label>
         <Input name="cpf"/>
       </InputArea>
       
